@@ -1,15 +1,14 @@
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QPushButton, QButtonGroup, QWidget, QMainWindow, QGridLayout, QLayout, \
-    QLineEdit, QTableWidget, QSpinBox, QTableWidgetItem, QInputDialog, QMessageBox, QComboBox, QLabel
+from PyQt5.QtWidgets import QApplication, QPushButton,  QWidget, QMainWindow, QTableWidget,  QTableWidgetItem,\
+    QInputDialog, QMessageBox
 import sys
 
-class Journal(QWidget):
+class Table(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.initUi()
-        self.btn.clicked.connect(self.add_num)
+        self.btn.clicked.connect(self.add)
         self.Flag = False
-        self.table.cellDoubleClicked[int, int].connect(self.edit_num)
+        self.table.cellDoubleClicked[int, int].connect(self.edit)
 
     def initUi(self):
         self.resize(900, 800)
@@ -22,62 +21,62 @@ class Journal(QWidget):
         self.btn.setGeometry(0, 0, 400, 100)
         self.btn.move(10, 10)
 
-    def add_num(self):
-        text, ok = QInputDialog.getText(self, 'Add', 'Enter number in 10 system')
-        if ok:
+    def add(self):
+        txt, true = QInputDialog.getText(self, 'Add', 'Enter number in 10 system')
+        if true:
             try:
-                num = int(text)
-                minus = ""
-                if num < 0:
-                    minus += "-"
-                    num *= -1
+                number = int(txt)
+                min = ""
+                if number < 0:
+                    min += "-"
+                    number *= -1
                 self.table.insertRow(self.table.rowCount())
                 i = self.table.rowCount() - 1
-                self.table.setItem(i, 0, QTableWidgetItem(minus+str(num)))
-                self.table.setItem(i, 1, QTableWidgetItem(minus+self.convert_base(num, 2, 10)))
-                self.table.setItem(i, 2, QTableWidgetItem(minus+self.convert_base(num, 16, 10)))
+                self.table.setItem(i, 0, QTableWidgetItem(min+str(number)))
+                self.table.setItem(i, 1, QTableWidgetItem(min+self.convert(number, 2, 10)))
+                self.table.setItem(i, 2, QTableWidgetItem(min+self.convert(number, 16, 10)))
             except:
                 QMessageBox.critical(self, "Error", "Wrong number format")
 
-    def edit_num(self, row, col):
-        systemtxt = ""
-        system = 0
+    def edit(self, row, col):
+        systxt = ""
+        sys = 0
         if col == 0:
-            systemtxt = "10"
-            system = 10
+            systxt = "10"
+            sys = 10
         elif col == 1:
-            systemtxt = "2"
-            system = 2
+            systxt = "2"
+            sys = 2
         else:
-            systemtxt = "16"
-            system = 16
+            systxt = "16"
+            sys = 16
 
-        text, ok = QInputDialog.getText(self, 'Edit', 'Enter New '+systemtxt+' system')
-        if ok:
+        txt, true = QInputDialog.getText(self, 'Edit', 'Enter New '+systxt+' system')
+        if true:
             try:
-                num = text
-                minus = ""
-                if "-" in num:
-                    minus += "-"
-                    num = num[1:]
-                self.table.setItem(row, 0, QTableWidgetItem(minus + self.convert_base(num, 10, system)))
-                self.table.setItem(row, 1, QTableWidgetItem(minus + self.convert_base(num, 2, system)))
-                self.table.setItem(row, 2, QTableWidgetItem(minus + self.convert_base(num, 16, system)))
+                number = txt
+                min = ""
+                if "-" in number:
+                    min += "-"
+                    number = number[1:]
+                self.table.setItem(row, 0, QTableWidgetItem(min + self.convert(number, 10, sys)))
+                self.table.setItem(row, 1, QTableWidgetItem(min + self.convert(number, 2, sys)))
+                self.table.setItem(row, 2, QTableWidgetItem(min + self.convert(number, 16, sys)))
             except:
                 QMessageBox.critical(self, "Error", "Wrong number format")
 
 
 
-    def convert_base(self, num, to_base = 10, from_base = 10):
-        if isinstance(num, str):
-            n = int(num, from_base)
+    def convert(self, number, to_base = 10, from_base = 10):
+        if isinstance(number, str):
+            n = int(number, from_base)
         else:
-            n = int(num)
+            n = int(number)
         alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         if n < to_base:
             return str(alphabet[n])
         else:
-            return self.convert_base(n // to_base, to_base) + alphabet[n % to_base]
+            return self.convert(n // to_base, to_base) + alphabet[n % to_base]
 
 
 
@@ -86,7 +85,7 @@ if __name__ == '__main__':
     qapp = QApplication(sys.argv)
     qapp.setStyleSheet(open("newstyle.qss", 'r').read())
     main_windows = QMainWindow()
-    j = Journal(main_windows)
+    j = Table(main_windows)
     main_windows.setFixedSize(900, 800)
     main_windows.show()
     qapp.exec_()
