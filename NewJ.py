@@ -14,11 +14,10 @@ class Table(QWidget):
         self.table = QTableWidget(self)
         self.table.setColumnCount(3)
         self.table.setHorizontalHeaderLabels(["10 СС", "2 СС", "16 СС"])
-        self.table.setGeometry(0, 0, 425, 750)
-        self.table.move(450, 10)
+        self.table.setGeometry(450, 10, 425, 750)
         self.btn = QPushButton("Add", self)
-        self.btn.setGeometry(0, 0, 400, 100)
-        self.btn.move(10, 10)
+        self.btn.setGeometry(10, 10, 400, 100)
+
 
     def add(self):
         txt, true = QInputDialog.getText(self, 'Add', 'Enter number in 10 system')
