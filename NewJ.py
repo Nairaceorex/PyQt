@@ -7,7 +7,6 @@ class Table(QWidget):
         super().__init__(*args, **kwargs)
         self.initUi()
         self.btn.clicked.connect(self.add)
-        self.Flag = False
         self.table.cellDoubleClicked[int, int].connect(self.edit)
 
     def initUi(self):
