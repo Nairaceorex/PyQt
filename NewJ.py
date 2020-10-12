@@ -48,15 +48,13 @@ class Table(QWidget):
                 QMessageBox.critical(self, "Error", "Wrong number format")
 
     def edit(self, row, col):
-        systxt = ""
-        sys = 0
         if col == 0:
             systxt = "10"
             sys = 10
         elif col == 1:
             systxt = "2"
             sys = 2
-        elif col == 16:
+        else:
             systxt = "16"
             sys = 16
 
