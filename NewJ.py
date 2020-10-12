@@ -79,7 +79,7 @@ if __name__ == '__main__':
     qapp = QApplication(sys.argv)
     qapp.setStyleSheet(open("newstyle.qss", 'r').read())
     main_windows = QMainWindow()
-    j = Table(main_windows)
+    t = Table(main_windows)
     main_windows.setFixedSize(900, 800)
     main_windows.show()
     qapp.exec_()
