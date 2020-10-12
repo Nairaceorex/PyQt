@@ -1,6 +1,7 @@
-from PyQt5.QtWidgets import QApplication, QPushButton,  QWidget, QMainWindow, QTableWidget,  QTableWidgetItem,\
+from PyQt5.QtWidgets import QApplication, QPushButton, QWidget, QMainWindow, QTableWidget, QTableWidgetItem, \
     QInputDialog, QMessageBox
 import sys
+
 
 class Table(QWidget):
     def __init__(self, *args, **kwargs):
@@ -18,6 +19,16 @@ class Table(QWidget):
         self.btn = QPushButton("Add", self)
         self.btn.setGeometry(10, 10, 400, 100)
 
+    def convert(self, number, to_base = 10, from_base = 10):
+        if isinstance(number, str):
+            n = int(number, from_base)
+        else:
+            n = int(number)
+        alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        if n < to_base:
+            return str(alphabet[n])
+        else:
+            return self.convert(n // to_base, to_base) + alphabet[n % to_base]
 
     def add(self):
         txt, true = QInputDialog.getText(self, 'Add', 'Enter number in 10 system')
@@ -30,9 +41,9 @@ class Table(QWidget):
                     number *= -1
                 self.table.insertRow(self.table.rowCount())
                 i = self.table.rowCount() - 1
-                self.table.setItem(i, 0, QTableWidgetItem(min+str(number)))
-                self.table.setItem(i, 1, QTableWidgetItem(min+self.convert(number, 2, 10)))
-                self.table.setItem(i, 2, QTableWidgetItem(min+self.convert(number, 16, 10)))
+                self.table.setItem(i, 0, QTableWidgetItem(min + str(number)))
+                self.table.setItem(i, 1, QTableWidgetItem(min + self.convert(number, 2, 10)))
+                self.table.setItem(i, 2, QTableWidgetItem(min + self.convert(number, 16, 10)))
             except:
                 QMessageBox.critical(self, "Error", "Wrong number format")
 
@@ -45,11 +56,11 @@ class Table(QWidget):
         elif col == 1:
             systxt = "2"
             sys = 2
-        elif col ==16:
+        elif col == 16:
             systxt = "16"
             sys = 16
 
-        txt, true = QInputDialog.getText(self, 'Edit', 'Enter New '+systxt+' system')
+        txt, true = QInputDialog.getText(self, 'Edit', 'Enter New ' + systxt + ' system')
         if true:
             try:
                 number = txt
@@ -62,21 +73,6 @@ class Table(QWidget):
                 self.table.setItem(row, 2, QTableWidgetItem(min + self.convert(number, 16, sys)))
             except:
                 QMessageBox.critical(self, "Error", "Wrong number format")
-
-
-
-    def convert(self, number, to_base = 10, from_base = 10):
-        if isinstance(number, str):
-            n = int(number, from_base)
-        else:
-            n = int(number)
-        alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        if n < to_base:
-            return str(alphabet[n])
-        else:
-            return self.convert(n // to_base, to_base) + alphabet[n % to_base]
-
-
 
 
 if __name__ == '__main__':
