@@ -45,7 +45,7 @@ class Table(QWidget):
         elif col == 1:
             systxt = "2"
             sys = 2
-        else:
+        elif col ==16:
             systxt = "16"
             sys = 16
 
